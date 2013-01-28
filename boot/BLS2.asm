@@ -1,4 +1,3 @@
-
 bits 16
 
 org 0x8000
@@ -18,7 +17,6 @@ Print16:
     jmp short Print16
     .Done:
         ret
-
 start:
 	mov si, Good
 	call Print16
@@ -75,18 +73,3 @@ bits 32
 ; Enable A20 Gate
 a20:
     %include "a20.inc"
-
-a20_error:
-    error db "Couldn't enable A20 line!", 0, 13, 10
-    mov edi, VIDMEM
-    mov si, error
-    .print:
-        lodsb
-        or al, al
-        jz .done
-        mov dl, al
-        mov dh, 0x0E
-        mov [edi], dx
-    .done:
-        cli
-        hlt

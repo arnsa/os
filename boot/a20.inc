@@ -55,16 +55,36 @@ a20_op:
 
 wait_input:
     in al, 0x64
-    or al, 0x02
+    test al, 0x02
     jnz wait_input
     ret
 
 wait_output:
     in al, 0x64
-    or al, 0x01
+    test al, 0x01
     jz wait_output
-    ret 
+    ret
+
+error_a20 db "Couldn't enable A20 line! Computer will reboot...", 0
+
+a20_error:
+    mov edi, VIDMEM 
+    mov esi, error_a20 
+    .print: 
+        lodsb 
+        or al, al 
+        jz .reboot
+        mov dl, al 
+        mov dh, 0x0E 
+        mov [edi], dx 
+        add edi, 2 
+        jmp .print 
+   .reboot:
+        mov eax, 0
+        mov ebx, 0
+        div ebx
 
 elf:
     jmp boot_elf
     %include "bootelf.inc"
+
