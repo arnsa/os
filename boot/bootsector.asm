@@ -27,7 +27,7 @@ cluster: dw 0
 lba: dw 0
 offset: dw 0
 
-bootloader db "BL2S    SYS", 0
+bootloader db "BLS2    SYS", 0
 errormsg:
 db "Read error or system files not present!", 13, 10
 db "Press a key to reboot...", 13, 10, 0
