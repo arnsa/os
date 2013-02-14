@@ -5,8 +5,10 @@ org 0x8000
 jmp start
 
 %define VIDMEM 0xB8000
+%define X      0x50
+%define Y      0x19
 
-Good db "All good yo!", 0
+Good db "All good yaw!", 0
 
 Print16:
     lodsb
@@ -70,6 +72,16 @@ pmode:
 
 bits 32
 
+ClrScr:
+    mov ax, 0x700
+    mov ecx, X*Y
+    mov edi, VIDMEM
+    cld
+    rep stosw
+    ret
+
 ; Enable A20 Gate
 a20:
-    %include "a20.inc"
+    %include "include/a20.inc"
+
+
