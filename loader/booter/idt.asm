@@ -285,7 +285,7 @@ isr47:
 
 isr_stub:
 	push esp
-	add dword [esp], 0x04
+	add dword [esp], 0x08
 	push ebp
 	push eax
 	push ebx
@@ -293,29 +293,31 @@ isr_stub:
 	push edx
 	push esi
 	push edi
-	push word ds
-	push word es
-	push word fs
-	push word gs
-	push word ss
-	mov ax,0x10
-	mov ds,ax
-	mov es,ax
-	mov fs,ax
-	mov gs,ax
-	mov ss,ax
+	push ds
+	push es
+	push fs
+	push gs
+	push ss
+	mov ax, 0x10
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+	mov ss, ax
 	push esp
 	call i386_handle_exception
-	add esp,4 
-	pop word ss
-	pop word gs
-	pop word fs
-	pop word es
-	pop word ds
+	add esp, 0x04
+	pop ss
+	pop gs
+	pop fs
+	pop es
+	pop ds
 	pop edi
 	pop esi
 	pop edx
 	pop ecx
 	pop ebx
 	pop eax
+	pop ebp
+	pop esp
 	iret

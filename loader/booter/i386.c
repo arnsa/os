@@ -19,12 +19,11 @@ struct _idt {
 };
 
 struct registers{
-	u16_t ss,gs,fs,es,ds;
+	u32_t ss,gs,fs,es,ds;
     u32_t 
         edi, esi, edx, ecx, ebx, eax, ebp, esp,
         N, errorcode,
         eip, cs, eflags;
-	u16_t old_esp, old_ss, old_es, old_ds, olds_fs, old_gs;
 };
 
 #pragma pack(pop)
@@ -66,7 +65,7 @@ char const * exceptions[32] = {"Divide Error Exception",
 struct _idt idt[48];
 
 void i386_idt_install(void * base, u16_t limit) {
-	treg_t idtr = {limit,base};
+	treg_t idtr = {limit, base};
 	asm("lidt %0" :: "m"(idtr));
 }
 
@@ -91,7 +90,7 @@ void i386_isrs_install(void) {
  
 void i386_handle_exception(struct registers *reg) {
 	if(reg->N < 32){
-		_printf("%d. System has beed halted. ", exceptions[reg->N]);
+		_printf("%s. System has been halted.\n", exceptions[reg->N]);
 		for(;;);
 	}else if(reg->N < 48){
 		PIC_EOI(reg->N);
