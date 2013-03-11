@@ -1,7 +1,7 @@
 #include <stdarg.h>
 #include "../_stdlib.h"
 
-unsigned short * screen = (unsigned short *)0xB8000;
+unsigned short *screen = (unsigned short *)0xB8000;
 unsigned long screen_idx = 0;
 
 void _putch(char const ch) {
@@ -101,3 +101,8 @@ void _printf(const char *format, ...) {
 	va_end(ap);
 }
 
+void init_printf(char *str) {
+	unsigned char y = (*(unsigned char *)0x450) + 1;
+	screen_idx += (y * 80);
+	_printf("%s", str);
+}

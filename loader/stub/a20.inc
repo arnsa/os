@@ -1,9 +1,4 @@
 a20_scp:
-    mov ax, 0x10
-    mov ds, ax
-    mov ss, ax
-    mov es, ax
-    mov esp, 0x90000
     mov al, 0x02
     out 0x92, al
     mov eax, 0x11111111
@@ -68,7 +63,7 @@ wait_output:
 error_a20 db "Couldn't enable A20 line! Computer will reboot...", 0
 
 a20_error:
-    call ClrScr
+    call ClrScr32
     mov edi, VIDMEM 
     mov esi, error_a20 
     .print: 
@@ -86,6 +81,10 @@ a20_error:
         div ebx
 
 elf:
+	mov ebx, done32
+	call Print32
+	mov al, byte[CurY]
+	mov [0x450], al
     jmp boot_elf
     %include "bootelf.inc"
 
