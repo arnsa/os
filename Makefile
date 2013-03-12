@@ -4,7 +4,7 @@ LD = ld
 
 CFLAGS = -c -m32 -nostdlib -nostartfiles -nodefaultlibs
 AFLAGS = -f
-LDFLAGS = -m elf_i386 -e main -T link.ld --strip-all -o
+LDFLAGS = -m elf_i386 -e kmain -T link.ld --strip-all -o
 
 all: compile_a compile_c link finish
 
@@ -32,7 +32,7 @@ compile_c:
 #LINK
 link:
 
-	${LD} i386.o idt.o pic.o main.o printf.o stdlib.o string.o ${LDFLAGS} stage2.elf
+	${LD} main.o i386.o idt.o pic.o printf.o stdlib.o string.o ${LDFLAGS} stage2.elf
 
 #FINISH
 finish:
