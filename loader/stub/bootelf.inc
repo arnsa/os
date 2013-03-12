@@ -1,7 +1,6 @@
 offset:    dw 0
 
 boot_elf:
-    call ClrScr
     mov eax, dword[eof+0x1C]
     mov [offset], eax
     movzx ecx, word[eof+0x2C]

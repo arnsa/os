@@ -51,7 +51,7 @@ start:
     mov es, ax
     mov ax, 0x9000
     mov ss, ax
-    mov sp, 0xFFFF
+    mov sp, 0xFC00
 	jmp load_gdt
 
 gdt:
