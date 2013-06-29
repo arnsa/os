@@ -2,6 +2,7 @@
 #include "include/i386.h"
 #include "include/idt.h"
 #include "include/pic.h"
+#include "include/rtc.h"
 #include <_printf.h>
 
 #pragma pack(push,1)
@@ -89,11 +90,44 @@ void i386_isrs_install(void) {
 }
  
 void i386_handle_exception(struct registers *reg) {
+	u8_t irq;
 	if(reg->N < 32){
-		_printf("%s. System has been halted.\n", exceptions[reg->N]);
+		kprintf("%s. System has been halted.\n", exceptions[reg->N]);
 		for(;;);
-	}else if(reg->N < 48){
-		PIC_EOI(reg->N);
+	}else if(reg->N >= 32 && reg->N < 48){
+		irq = reg->N - 32;
+		switch(irq) {
+			case IRQ_TIMER:
+				break;
+			case IRQ_KEYBOARD:
+				break;
+			case IRQ_CASCADE:
+				break;
+			case IRQ_COM2OR4:
+				break;
+			case IRQ_COM1OR3:
+				break;
+			case IRQ_LPT2:
+				break;
+			case IRQ_FDC:
+				break;
+			case IRQ_LPT1:
+				break;
+			case IRQ_RTC:
+				rtc_isr();
+				break;
+			case IRQ_PS2_MOUSE:
+				break;
+			case IRQ_FPU:
+				break;
+			case IRQ_ATA1:
+				break;
+			case IRQ_ATA2:
+				break;
+			default:
+				break;
+		}
+		pic_eoi(reg->N);
 	}
 }
 

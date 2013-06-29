@@ -81,10 +81,6 @@ a20_error:
         div ebx
 
 elf:
-	mov ebx, done32
-	call Print32
-	mov al, byte[CurY]
-	mov [0x450], al
     jmp boot_elf
     %include "bootelf.inc"
 

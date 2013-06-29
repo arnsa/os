@@ -6,6 +6,6 @@ extern unsigned long screen_idx;
 
 void putch(char const);
 char *dectohex(unsigned);
-void _printf(const char *, ...);
+void kprintf(const char *, ...);
 
 #endif

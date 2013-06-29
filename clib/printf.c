@@ -1,5 +1,5 @@
 #include <stdarg.h>
-#include "../_stdlib.h"
+#include "../include/_stdlib.h"
 
 unsigned short *screen = (unsigned short *)0xB8000;
 unsigned long screen_idx = 0;
@@ -22,7 +22,7 @@ char *dectohex(unsigned num) {
 	return str;
 }
 
-void _printf(const char *format, ...) {
+void kprintf(const char *format, ...) {
 	char _str[256], *str = _str;
 	va_list ap;
 	va_start(ap, format);
@@ -40,6 +40,8 @@ void _printf(const char *format, ...) {
 			}
 			format++;
 			continue;
+		}else if(*format == '\r'){
+			x = 0;
 		}else if(type){
 			type = 0;
 			switch(*format){
@@ -99,10 +101,4 @@ void _printf(const char *format, ...) {
 		}
 	}
 	va_end(ap);
-}
-
-void init_printf(char *str) {
-	unsigned char y = (*(unsigned char *)0x450) + 1;
-	screen_idx += (y * 80);
-	_printf("%s", str);
 }
