@@ -55,3 +55,4 @@ clean:
 	rm *.sys
 	rm arnos.flp
 	rm bootsector
+	rm ctool
