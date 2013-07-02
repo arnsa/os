@@ -47,6 +47,11 @@ gdt_pointer:
 
 load_gdt:
 	lgdt [gdt_pointer]
+	jmp a20_bios
+
+a20_bios:
+	mov ax, 0x2401
+	int 0x15
 	jmp pmode
 
 ; Turn on protected mode
@@ -77,4 +82,9 @@ a20:
     mov ds, ax
     mov esp, 0x90000
 	call ClrScr32
+	mov eax, 0x11111111
+	mov [0x100000], eax
+	cmp [0], eax
+	jz a20_scp
+	jmp elf
     %include "a20.inc"

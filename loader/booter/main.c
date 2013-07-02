@@ -9,6 +9,9 @@ int kmain(int argc, char **argv) {
 	i386_isrs_install();	
 	rtc_init();
 	i386_sti();
-	for(;;)
+	for(;;){
+		rtc_sleep(1000);
+		kprintf("SEC: %d\n", rtc_time()/1000);
+	}
 	return 0;
 }

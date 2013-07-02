@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include "../include/_stdlib.h"
+#include "../include/_string.h"
 
 unsigned short *screen = (unsigned short *)0xB8000;
 unsigned long screen_idx = 0;
@@ -26,7 +27,7 @@ void kprintf(const char *format, ...) {
 	char _str[256], *str = _str;
 	va_list ap;
 	va_start(ap, format);
-	unsigned char x = 0, y = 0, type = 0;
+	unsigned char x = 0, type = 0;
 
 	while(*format) {
 		if(*format == '%'){

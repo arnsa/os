@@ -2,7 +2,7 @@ AC = nasm
 CC = gcc
 LD = ld
 
-CFLAGS = -c -m32 -nostdlib -nostartfiles -nodefaultlibs
+CFLAGS = -c -m32 -nostdlib -nostartfiles -nodefaultlibs -Wall
 AFLAGS = -f
 LDFLAGS = -m elf_i386 -e kmain -T link.ld --strip-all -o
 
@@ -26,10 +26,10 @@ compile_c:
 	${CC} loader/booter/pic.c ${CFLAGS} -I include -o pic.o
 	${CC} loader/booter/rtc.c ${CFLAGS} -I include -o rtc.o
 	${CC} loader/booter/main.c ${CFLAGS} -I include -o main.o
-	${CC} clib/printf.c ${CFLAGS} -o printf.o
-	${CC} clib/stdlib.c ${CFLAGS} -o stdlib.o
-	${CC} clib/string.c ${CFLAGS} -o string.o
-	${CC} clib/system.c ${CFLAGS} -o system.o
+	${CC} libc/printf.c ${CFLAGS} -o printf.o
+	${CC} libc/stdlib.c ${CFLAGS} -o stdlib.o
+	${CC} libc/string.c ${CFLAGS} -o string.o
+	${CC} libc/system.c ${CFLAGS} -o system.o
 
 #LINK
 link:
